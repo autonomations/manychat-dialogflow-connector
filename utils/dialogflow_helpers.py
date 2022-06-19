@@ -5,16 +5,12 @@ import requests
 
 
 @dataclass
-class DialogFlowAPI:
-    project_id: str
+class DialogFlowAPI:   # Dialogflow API
+    project_id: str    # Get the dialogflow project, agent, base
     agent_id: str
     base_url = 'https://dialogflow.cloud.google.com/v1/integrations/messenger/webhook'
 
-    def detect_intent(self,
-                      session_id: str,
-                      text: str,
-                      language_code: str = 'en',
-                      context: str = None):
+    def detect_intent(self, session_id: str, text: str, language_code: str = 'en', context: str = None):
 
         response = lambda: None
         response.messages = []
@@ -23,7 +19,7 @@ class DialogFlowAPI:
         data = {
             'queryInput': {
                 'text': {
-                    'text': text,
+                    'text': text,                      # Declaring in the data
                     'languageCode': language_code,
                 }
             },
@@ -39,7 +35,7 @@ class DialogFlowAPI:
                 ]
             }
 
-        df_response = requests.post(
+        df_response = requests.post(            # Post to dialog flow webhook base / agent / session_id (manychat psid) / location
             url=f'{self.base_url}/{self.agent_id}/sessions/{session_id}?platform=webdemo',
             data=json.dumps(data),
         )
