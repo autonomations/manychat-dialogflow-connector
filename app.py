@@ -3,8 +3,8 @@ from flask import Flask, request
 from utils import manychat_helpers, dialogflow_helpers
 import json
 
-# import logging
-# logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.DEBUG)
+import logging
+logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 
 
 app = Flask(__name__)
@@ -41,7 +41,6 @@ def connector():
             'status': 'success'
         }
     
-
         if input_text == '':
             response['status'] = 'error, the user has no last message'
             return response
@@ -54,9 +53,13 @@ def connector():
             context=context if context != '' else None
         )
         
-        print('-'*40)
-        print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
-        print('-'*40) 
+        logging.debug('-'*80)
+        logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
+        logging.debug('-'*80)
+        
+        # print('-'*40)
+        # print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
+        # print('-'*40) 
     
         # Middleware to handle/copy the parameter response to local variables in manychat
         if dialogflow_response['parameters']:
@@ -66,14 +69,25 @@ def connector():
                             field_name=key,
                             field_value=value[0] if isinstance(value, list) else value, # Take the first value a list, otherwise value
                         )
+                        
+                        logging.debug(msg=f"Get User Information:")
+                        logging.debug('-'*80)
+                        logging.debug('-'*80)
+                        logging.debug(msg=f"{mc.get_user_info()}")
         
         # Middleware to direct all dialogflow messages and flows to manychat
         if dialogflow_response['messages']:
             for message in dialogflow_response['messages']:
                 if message['type'] == 'text':
-                    print('message: {message}')           
+                    logging.debug(msg="-"*80)
+                    logging.debug(msg="-"*80)
+                    logging.debug(msg="Dialogflow TEXT -- {}".format(message['message']))
+                    # print('message: {message}')           
                     mc.send_content(messages=[message['message']])
                 else:                                                   # Otherwise send a flow
+                    logging.debug(msg="-"*80)
+                    logging.debug(msg="-"*80)
+                    logging.debug(msg="Dialogflow FLOW  -- {}".format(message['flow']))
                     mc.send_flow(flow_ns = message['flow'])
 
     

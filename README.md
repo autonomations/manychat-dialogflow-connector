@@ -58,3 +58,9 @@ Website: https://daiangan.com<br/>
 
 
 flask run --reload --cert=adhoc
+
+
+openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365
+flask run --reload --cert=cert.pem --key=key.pem 
+
+gunicorn --certfile cert.pem --keyfile key.pem -b 0.0.0.0:8000 hello:app
