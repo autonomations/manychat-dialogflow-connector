@@ -1,0 +1,76 @@
+INFO:werkzeug: * Detected change in '/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py', reloading
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:30:44] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 335, in run_wsgi
+    execute(self.server.app)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 322, in execute
+    application_iter = app(environ, start_response)
+  File "/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py", line 7, in <module>
+    logging.basicConfig(filename='log.log', encoding='utf-8', level=logging.DEBUG)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/logging/__init__.py", line 1994, in basicConfig
+    raise ValueError('Unrecognised argument(s): %s' % keys)
+ValueError: Unrecognised argument(s): encoding
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): dialogflow.cloud.google.com:443
+DEBUG:urllib3.connectionpool:https://dialogflow.cloud.google.com:443 "POST /v1/integrations/messenger/webhook/bf83dfc5-434f-469a-890e-6ac3db6e8da3/sessions/5220826191261652?platform=webdemo HTTP/1.1" 200 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:30:48] "POST / HTTP/1.1" 200 -
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.manychat.com:443
+DEBUG:urllib3.connectionpool:https://api.manychat.com:443 "GET /fb/subscriber/getInfo?subscriber_id=5220826191261652 HTTP/1.1" 401 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:30:59] "POST / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py', reloading
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:31:44] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 335, in run_wsgi
+    execute(self.server.app)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 322, in execute
+    application_iter = app(environ, start_response)
+  File "/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py", line 7, in <module>
+    logging.basicConfig(filename='log.log', encoding='utf-8', level=logging.DEBUG)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/logging/__init__.py", line 1994, in basicConfig
+    raise ValueError('Unrecognised argument(s): %s' % keys)
+ValueError: Unrecognised argument(s): encoding
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.manychat.com:443
+DEBUG:urllib3.connectionpool:https://api.manychat.com:443 "GET /fb/subscriber/getInfo?subscriber_id=5220826191261652 HTTP/1.1" 401 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:32:27] "POST / HTTP/1.1" 200 -
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.manychat.com:443
+DEBUG:urllib3.connectionpool:https://api.manychat.com:443 "GET /fb/subscriber/getInfo?subscriber_id=5220826191261652 HTTP/1.1" 401 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:32:30] "POST / HTTP/1.1" 200 -
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.manychat.com:443
+DEBUG:urllib3.connectionpool:https://api.manychat.com:443 "GET /fb/subscriber/getInfo?subscriber_id=5220826191261652 HTTP/1.1" 401 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:33:38] "POST / HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py', reloading
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:39:51] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 335, in run_wsgi
+    execute(self.server.app)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 322, in execute
+    application_iter = app(environ, start_response)
+  File "/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py", line 7, in <module>
+    logging.basicConfig(filename='log.log', encoding='utf-8', level=logging.DEBUG)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/logging/__init__.py", line 1994, in basicConfig
+    raise ValueError('Unrecognised argument(s): %s' % keys)
+ValueError: Unrecognised argument(s): encoding
+INFO:werkzeug: * Detected change in '/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py', reloading
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:40:00] "[35m[1mPOST / HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 335, in run_wsgi
+    execute(self.server.app)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/site-packages/werkzeug/serving.py", line 322, in execute
+    application_iter = app(environ, start_response)
+  File "/Volumes/GoogleDrive/my drive/colab notebooks/notebook_app_v0.1/app/api/manychat-dialogflow-connector/app.py", line 7, in <module>
+    logging.basicConfig(filename='log.log', encoding='utf-8', level=logging.DEBUG)
+  File "/Users/kbselander/miniconda3/envs/py37/lib/python3.8/logging/__init__.py", line 1994, in basicConfig
+    raise ValueError('Unrecognised argument(s): %s' % keys)
+ValueError: Unrecognised argument(s): encoding
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): dialogflow.cloud.google.com:443
+DEBUG:urllib3.connectionpool:https://dialogflow.cloud.google.com:443 "POST /v1/integrations/messenger/webhook/bf83dfc5-434f-469a-890e-6ac3db6e8da3/sessions/5220826191261652?platform=webdemo HTTP/1.1" 200 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:40:02] "POST / HTTP/1.1" 200 -
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.manychat.com:443
+DEBUG:urllib3.connectionpool:https://api.manychat.com:443 "GET /fb/subscriber/getInfo?subscriber_id=5220826191261652 HTTP/1.1" 401 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:41:03] "POST / HTTP/1.1" 200 -
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.manychat.com:443
+DEBUG:urllib3.connectionpool:https://api.manychat.com:443 "GET /fb/subscriber/getInfo?subscriber_id=5220826191261652 HTTP/1.1" 401 None
+INFO:werkzeug:127.0.0.1 - - [19/Jun/2022 07:42:17] "POST / HTTP/1.1" 200 -

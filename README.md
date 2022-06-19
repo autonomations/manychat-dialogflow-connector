@@ -54,3 +54,7 @@ __Daian Gan__<br>
 Github: [daiangan](https://github.com/daiangan)<br/>
 E-mail: daian@ganmedia.com<br/>
 Website: https://daiangan.com<br/>
+
+
+
+flask run --reload --cert=adhoc

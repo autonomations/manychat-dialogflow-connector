@@ -3,8 +3,11 @@ from flask import Flask, request
 from utils import manychat_helpers, dialogflow_helpers
 import json
 
-app = Flask(__name__)
+# import logging
+# logging.basicConfig(filename="log.txt", encoding="utf-8", level=logging.DEBUG)
 
+
+app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def connector():
@@ -19,10 +22,16 @@ def connector():
         context = request_data['context']   # Pass in a context variable to help guide dialogflow
         input_text = ''
 
-        df = dialogflow_helpers.DialogFlowAPI(project_id=dialogflow_project_id, agent_id=dialogflow_agent_id) # Init a dialogflow object
-        mc = manychat_helpers.ManyChatAPI(api_key=manychat_api_key, psid=psid)                   # Init manychat object
+        df = dialogflow_helpers.DialogFlowAPI(   # Init Helpers
+                project_id=dialogflow_project_id, 
+                agent_id=dialogflow_agent_id
+            ) 
+        mc = manychat_helpers.ManyChatAPI(
+                api_key=manychat_api_key,
+                psid=psid
+            )                   # Init manychat object
             
-        if df_text_input == '':                           # if dialgoflow input text is empty, get many chat last text input
+        if df_text_input == "":                           # if dialgoflow input text is empty, get many chat last text input
             mc_user_info = mc.get_user_info()
             input_text = mc_user_info['data']['last_input_text'] if mc_user_info['status'] == 'success' else '' 
         else:
@@ -44,52 +53,36 @@ def connector():
             language_code=language,
             context=context if context != '' else None
         )
-
+        
         print('-'*40)
-        print(json.dumps(dialogflow_response, indent=4, sort_keys=True))
-        # print(json.dumps(dialogflow_response['parameters'], indent=4, sort_keys=True))
-        print('-'*40)
-    
+        print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
+        print('-'*40) 
     
         # Middleware to handle/copy the parameter response to local variables in manychat
-        try:
-            if dialogflow_response['parameters'] != {}:
-                for param in dialogflow_response['parameters']:  
-                    for key, value in param.items():          
-                        if value and value != '':             
-                            mc.set_custom_field_by_name(      
-                                field_name=key,
-                                field_value=value[0] if isinstance(value, list) else value, # Take the first value a list, otherwise value
-                            )
-        except:
-            print(f"Parameters - No dialogflow response parameters in response")
-
+        if dialogflow_response['parameters']:
+            for key, value in enumerate(dialogflow_response['parameters']):  # for each of the parameters 
+                    if value and value != '':             
+                        mc.set_custom_field_by_name(      
+                            field_name=key,
+                            field_value=value[0] if isinstance(value, list) else value, # Take the first value a list, otherwise value
+                        )
+        
         # Middleware to direct all dialogflow messages and flows to manychat
-        try:
-            for message in dialogflow_response['messages']:      
-                if message['type'] == 'text':                 
-                    mc.send_content(
-                        messages=[
-                            message['message']
-                        ]
-                    )
-                else:                                         # Otherwise send a flow
-                    mc.send_flow(
-                        flow_ns = message['flow']
-                    )
-        except:
-            print('Error - No return messages')
+        if dialogflow_response['messages']:
+            for message in dialogflow_response['messages']:
+                if message['type'] == 'text':
+                    print('message: {message}')           
+                    mc.send_content(messages=[message['message']])
+                else:                                                   # Otherwise send a flow
+                    mc.send_flow(flow_ns = message['flow'])
 
-        
-        # params   = dialogflow_response['parameters'].keys()
-        # messages = dialogflow_response['messages'].keys()
-        
+    
         r = {
             'status': 'success',
-            'dialogflow' : {
+            'dialogflow': {
                 'dialogflow_response': dialogflow_response,
-                # 'dialogflow_parameters' : params,
-                # 'dialogflow_messages'  : messages,
+                'dialogflow_parameters' : dialogflow_response['queryResult']['parameters'],
+                'dialogflow_messages'  : dialogflow_response['queryResult']['fulfillmentMessages'],
             },
             'data': {
                 'psid': psid,

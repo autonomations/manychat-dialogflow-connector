@@ -16,7 +16,7 @@ class DialogFlowAPI:   # Dialogflow API
                       language_code: str = 'en', 
                       context: str = None):
         
-        response = lambda: None                        # Anonymous function
+        response = lambda: None                        # Anonymous function to add infromation variables to
         response.messages = []
         response.parameters = []
 
@@ -39,15 +39,17 @@ class DialogFlowAPI:   # Dialogflow API
                 ]
             }
 
+        headerInfo = {'content-type': 'application/json' }
         df_response = requests.post(                   # Post to dialog flow webhook base / agent / session_id (manychat psid) / location
             url=f'{self.base_url}/{self.agent_id}/sessions/{session_id}?platform=webdemo',
             data=json.dumps(data),
+            headers=headerInfo,
         )
 
         clean_response = df_response.text.replace(")]}'", "")   # Replace all )]}' for nothing
-
         results = json.loads(clean_response)
-        print(json.dumps(results, indent=4, sort_keys=True))
+        # print(json.dumps(results, indent=4, sort_keys=True))
+
 
         if 'knowledgeAnswers' in results['queryResult']:
             if results['queryResult']['knowledgeAnswers']['answers']:
@@ -107,4 +109,7 @@ class DialogFlowAPI:   # Dialogflow API
                         }
                     )
 
+        results['messages']   = response.messages  
+        results['parameters'] = response.parameters
+        
         return results
