@@ -3,8 +3,8 @@ from flask import Flask, request
 from utils import manychat_helpers, dialogflow_helpers
 import json
 
-# import logging
-# logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+import logging
+logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 
 
 app = Flask(__name__)
@@ -58,27 +58,27 @@ def connector():
         print("-"*80)
         print(request_data)
         
-        # logging.debug('-'*80)
-        # logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
-        # logging.debug('-'*80)
+        logging.debug('-'*80)
+        logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
+        logging.debug('-'*80)
         
-        # print('-'*40)
-        # print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
-        # print('-'*40) 
+        print('-'*40)
+        print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
+        print('-'*40) 
     
         # Middleware to handle/copy the parameter response to local variables in manychat
         if dialogflow_response['parameters']:
-            for key, value in enumerate(dialogflow_response['parameters']):  # for each of the parameters 
+            for key, value in dialogflow_response['parameters']:  # for each of the parameters 
                     if value and value != '':             
                         mc.set_custom_field_by_name(      
                             field_name=key,
                             field_value=value[0] if isinstance(value, list) else value, # Take the first value a list, otherwise value
                         )
                         
-                        # logging.debug(msg=f"Get User Information:")
-                        # logging.debug('-'*80)
-                        # logging.debug('-'*80)
-                        # logging.debug(msg=f"{mc.get_user_info()}")
+                        logging.debug(msg=f"Get User Information:")
+                        logging.debug('-'*80)
+                        logging.debug('-'*80)
+                        logging.debug(msg=f"{mc.get_user_info()}")
                         print(f"Get User Information:")
                         print("-"*80)
                         print("-"*80)
