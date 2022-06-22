@@ -3,14 +3,15 @@ from flask import Flask, request
 from utils import manychat_helpers, dialogflow_helpers
 import json
 
-import logging
-logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+# import logging
+# logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def connector():
+    
     if request.method == 'POST':            # Route only if it is a POST request
         request_data = request.get_json()
         psid = request_data['user_id']      # Extracting request from Manychat -- user ID, API Key and then Project -> Agent
@@ -53,9 +54,13 @@ def connector():
             context=context if context != '' else None
         )
         
-        logging.debug('-'*80)
-        logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
-        logging.debug('-'*80)
+        print("request_data:")
+        print("-"*80)
+        print(request_data)
+        
+        # logging.debug('-'*80)
+        # logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
+        # logging.debug('-'*80)
         
         # print('-'*40)
         # print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
@@ -70,34 +75,40 @@ def connector():
                             field_value=value[0] if isinstance(value, list) else value, # Take the first value a list, otherwise value
                         )
                         
-                        logging.debug(msg=f"Get User Information:")
-                        logging.debug('-'*80)
-                        logging.debug('-'*80)
-                        logging.debug(msg=f"{mc.get_user_info()}")
+                        # logging.debug(msg=f"Get User Information:")
+                        # logging.debug('-'*80)
+                        # logging.debug('-'*80)
+                        # logging.debug(msg=f"{mc.get_user_info()}")
+                        print(f"Get User Information:")
+                        print("-"*80)
+                        print("-"*80)
+                        print(f"{mc.get_user_info()}")
         
         # Middleware to direct all dialogflow messages and flows to manychat
         if dialogflow_response['messages']:
             for message in dialogflow_response['messages']:
                 if message['type'] == 'text':
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="Dialogflow TEXT -- {}".format(message['message']))
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="Dialogflow TEXT -- {}".format(message['message']))
+                    print("-"*80)
+                    print("Dialogflow TEXT -- {}".format(message['message']))
                     # print('message: {message}')           
                     mc.send_content(messages=[message['message']])
                 else:                                                   # Otherwise send a flow
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="Dialogflow FLOW  -- {}".format(message['flow']))
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="Dialogflow FLOW  -- {}".format(message['flow']))
+                    print("-"*80)
+                    print("Dialogflow FLOW  -- {}".format(message['flow']))
                     mc.send_flow(flow_ns = message['flow'])
 
     
         r = {
             'status': 'success',
-            'dialogflow': {
-                'dialogflow_response': dialogflow_response,
-                'dialogflow_parameters' : dialogflow_response['queryResult']['parameters'],
-                'dialogflow_messages'  : dialogflow_response['queryResult']['fulfillmentMessages'],
-            },
+            'dialogflow_response': dialogflow_response,
+                # 'dialogflow_parameters' : dialogflow_response['queryResult']['parameters'],
+                # 'dialogflow_messages'  : dialogflow_response['queryResult']['fulfillmentMessages'],
             'data': {
                 'psid': psid,
                 'manychat_api_key': manychat_api_key,
