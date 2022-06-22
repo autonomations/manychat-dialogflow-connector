@@ -58,11 +58,11 @@ def connector():
         # print("-"*80)
         # print(request_data)
         
-        logging.debug("request_data:")
-        logging.debug('-'*80)
-        logging.debug(request_data)
+        logging.debug(msg="request_data")
+        logging.debug(msg='-'*80)
+        logging.debug(msg=request_data)
         logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
-        logging.debug('-'*80)
+        logging.debug(msg='-'*80)
         
         # print('-'*40)
         # print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
@@ -84,8 +84,8 @@ def connector():
                         # print(f"{mc.get_user_info()}")
             
             logging.debug(msg=f"Get User Information:")
-            logging.debug('-'*80)
-            logging.debug('-'*80)
+            logging.debug(msg='-'*80)
+            logging.debug(msg='-'*80)
             logging.debug(msg=f"{mc.get_user_info()}")
         
         # Middleware to direct all dialogflow messages and flows to manychat
@@ -129,7 +129,7 @@ def connector():
         logging.debug(msg="Response:")
         logging.debug(msg="-"*80)
         logging.debug(msg="-"*80)
-        logging.debug(msg=r)
+        logging.debug(msg="{}".format(r))
 
         return r
 
