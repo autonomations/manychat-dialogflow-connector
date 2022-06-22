@@ -54,15 +54,27 @@ def connector():
             context=context if context != '' else None
         )
         
-        # print("request_data:")
-        # print("-"*80)
-        # print(request_data)
+        print("request_data:")
+        print("-"*80)
+        print("-"*80)
+        print("{}".format(request_data))
         
-        logging.debug(msg="request_data")
-        logging.debug(msg='-'*80)
-        logging.debug(msg=request_data)
-        logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
-        logging.debug(msg='-'*80)
+        print("DialogFlow Response:")
+        print("-"*80)
+        print("-"*80)
+        print("{}".format(dialogflow_response))
+        
+        
+        print("DialogFlow Messages:")
+        print("-"*80)
+        print("-"*80)
+        print("{}".format(dialogflow_response['messages']))
+        
+        # logging.debug(msg="request_data")
+        # logging.debug(msg='-'*80)
+        # logging.debug(msg=request_data)
+        # logging.debug(msg=f'dialogflow_response: {json.dumps(dialogflow_response, indent=4, sort_keys=True)}')
+        # logging.debug(msg='-'*80)
         
         # print('-'*40)
         # print(json.dumps(dialogflow_response['messages'], indent=4, sort_keys=True))
@@ -78,35 +90,42 @@ def connector():
                         )
                         
 
-                        # print(f"Get User Information:")
-                        # print("-"*80)
-                        # print("-"*80)
-                        # print(f"{mc.get_user_info()}")
+                        print(f"Get User Information:")
+                        print("-"*80)
+                        print("-"*80)
+                        print("".format(mc.get_user_info()))
             
-            logging.debug(msg=f"Get User Information:")
-            logging.debug(msg='-'*80)
-            logging.debug(msg='-'*80)
-            logging.debug(msg=f"{mc.get_user_info()}")
+            # logging.debug(msg=f"Get User Information:")
+            # logging.debug(msg="-"*80)
+            # logging.debug(msg="-"*80)
+            # logging.debug(msg=f"{mc.get_user_info()}")
         
         # Middleware to direct all dialogflow messages and flows to manychat
         if dialogflow_response['messages']:
             for message in dialogflow_response['messages']:
                 if message['type'] == 'text':
-                    logging.debug(msg="Dialogflow TEXT -- ")
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="{}".format(message['message']))
-                    # print("-"*80)
-                    # print("Dialogflow TEXT -- {}".format(message['message']))
-                    # # print('message: {message}')           
+                    # logging.debug(msg="Dialogflow TEXT -- ")
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="{}".format(message['message']))
+
+                    print("Dialogflow TEXT -- {}")
+                    print("-"*80)
+                    print("-"*80)
+                    print("{}".format(message['message']))      
+                         
                     mc.send_content(messages=[message['message']])
                 else:                                                   # Otherwise send a flow
-                    logging.debug(msg="Dialogflow Flow -- ")
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="-"*80)
-                    logging.debug(msg="{}".format(message['flow']))
-                    # print("-"*80)
-                    # print("Dialogflow FLOW  -- {}".format(message['flow']))
+                    # logging.debug(msg="Dialogflow Flow -- ")
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="-"*80)
+                    # logging.debug(msg="{}".format(message['flow']))
+                    
+                    print("Dialogflow FLOW  -- {}")
+                    print("-"*80)
+                    print("-"*80)
+                    print("{}".format(message['flow'])) 
+                    
                     mc.send_flow(flow_ns = message['flow'])
 
     
@@ -126,10 +145,11 @@ def connector():
                 'input_text': input_text
             }
         }
-        logging.debug(msg="Response:")
-        logging.debug(msg="-"*80)
-        logging.debug(msg="-"*80)
-        logging.debug(msg="{}".format(r))
+        
+        print("Response:")
+        print("-"*80)
+        print("-"*80)
+        print("{}".format(r)) 
 
         return r
 
