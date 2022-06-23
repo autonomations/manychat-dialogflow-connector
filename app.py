@@ -88,18 +88,17 @@ def connector():
 
         payload = {
             'subscriber_id': psid,
-            'data': {
-                'version': 'v2',
-                'content': {
-                    'messages': [
-                        {
-                            'type': 'text',
-                            'text': message,
-                        } for message in dialogflow_response.messages
-                    ]
-                }
+            
+            'version': 'v2',
+            'content': {
+                'messages': [
+                    {
+                        'type': 'text',
+                        'text': message,
+                    } for message in dialogflow_response.messages
+                ]
             },
-            'response' : response
+            'data': response
         }
         
         print("Response:")
