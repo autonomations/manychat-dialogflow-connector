@@ -24,96 +24,95 @@ def connector():
             'request': request.get_json()
         }
         
-        return response
 
-        # df = dialogflow_helpers.DialogFlowAPI(
-        #     project_id=dialogflow_project_id,
-        #     agent_id=dialogflow_agent_id,
-        # )
+        df = dialogflow_helpers.DialogFlowAPI(
+            project_id=dialogflow_project_id,
+            agent_id=dialogflow_agent_id,
+        )
 
-        # mc = manychat_helpers.ManyChatAPI(
-        #     api_key=manychat_api_key,
-        #     psid=psid,
-        # )
+        mc = manychat_helpers.ManyChatAPI(
+            api_key=manychat_api_key,
+            psid=psid,
+        )
 
-        # if df_text_input == '':
-        #     mc_user_info = mc.get_user_info()
-        #     if mc_user_info['status'] == 'success':
-        #         input_text = mc_user_info['data']['last_input_text']
-        # else:
-        #     input_text = df_text_input
+        if df_text_input == '':
+            mc_user_info = mc.get_user_info()
+            if mc_user_info['status'] == 'success':
+                input_text = mc_user_info['data']['last_input_text']
+        else:
+            input_text = df_text_input
 
-        # if input_text == '':
-        #     response['status'] = 'error'
-        #     return response
+        if input_text == '':
+            response['status'] = 'error'
+            return response
 
-        # dialogflow_response = df.detect_intent(
-        #     session_id=psid,
-        #     text=input_text,
-        #     language_code=language,
-        #     context=context if context != '' else None
-        # )
+        dialogflow_response = df.detect_intent(
+            session_id=psid,
+            text=input_text,
+            language_code=language,
+            context=context if context != '' else None
+        )
 
-        # if dialogflow_response.parameters:
-        #     for param in dialogflow_response.parameters:
-        #         for key, value in param.items():
-        #             if value and value != '':
-        #                 mc.set_custom_field_by_name(
-        #                     field_name=key,
-        #                     field_value=value[0] if isinstance(value, list) else value,
-        #                 )
+        if dialogflow_response.parameters:
+            for param in dialogflow_response.parameters:
+                for key, value in param.items():
+                    if value and value != '':
+                        mc.set_custom_field_by_name(
+                            field_name=key,
+                            field_value=value[0] if isinstance(value, list) else value,
+                        )
 
-        # for message in dialogflow_response.messages:
-        #     if message['type'] == 'text':
-        #         mc.send_content(
-        #             messages=[
-        #                 message['message']
-        #             ]
-        #         )
-        #     else:
-        #         mc.send_flow(
-        #             flow_ns=message['flow']
-        #         )
+        for message in dialogflow_response.messages:
+            if message['type'] == 'text':
+                mc.send_content(
+                    messages=[
+                        message['message']
+                    ]
+                )
+            else:
+                mc.send_flow(
+                    flow_ns=message['flow']
+                )
 
-        # response['response'] = '{}'.format(dialogflow_response.messages)
-        # response['parameters'] = '{}'.format(dialogflow_response.parameters)
-        # response['request']  = {
-        #         'psid': psid,
-        #         'manychat_api_key': manychat_api_key,
-        #         'dialogflow_project_id': dialogflow_project_id,
-        #         'dialogflow_agent_id': dialogflow_agent_id,
-        #         'df_text_input': df_text_input,
-        #         'language': language,
-        #         'context': context,
-        #         'input_text': input_text
-        #     }
-        # # response['results'] = results
+        response['response'] = '{}'.format(dialogflow_response.messages)
+        response['parameters'] = '{}'.format(dialogflow_response.parameters)
+        response['request']  = {
+                'psid': psid,
+                'manychat_api_key': manychat_api_key,
+                'dialogflow_project_id': dialogflow_project_id,
+                'dialogflow_agent_id': dialogflow_agent_id,
+                'df_text_input': df_text_input,
+                'language': language,
+                'context': context,
+                'input_text': input_text
+            }
+        # response['results'] = results
 
-        # messages = dialogflow_response.messages
+        messages = dialogflow_response.messages
         # messages = ['message 1', 'hello world message 2']
 
-        # payload = {
-        #     'subscriber_id': psid,
+        payload = {
+            'subscriber_id': psid,
             
-        #     'version': 'v2',
-        #     'content': {
-        #         'messages': [
-        #             {
-        #                 'type': 'text',
-        #                 'text': message,
-        #             } for message in messages
-        #         ]
-        #     }
+            'version': 'v2',
+            'content': {
+                'messages': [
+                    {
+                        'type': 'text',
+                        'text': message,
+                    } for message in messages
+                ]
+            }
           
-        # }
+        }
         
     
-        # # print("Response:")
-        # # print("-"*80)
-        # # print("-"*80)
-        # # print("{}".format(payload)) 
+        # print("Response:")
+        # print("-"*80)
+        # print("-"*80)
+        # print("{}".format(payload)) 
 
-        # return payload
+        return payload
 
     else:
         return 'I am alive and right here  --- v3 !'
