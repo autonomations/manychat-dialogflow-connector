@@ -64,6 +64,7 @@ def connector():
                             field_value=value[0] if isinstance(value, list) else value,
                         )
 
+        all_messages = []
         for message in dialogflow_response.messages:
             if message['type'] == 'text':
                 mc.send_content(
@@ -71,10 +72,19 @@ def connector():
                         message['message']
                     ]
                 )
+                
+                all_messages.append(message['message'])
             else:
+                print('*'*80)
+                print('*'*80)
                 mc.send_flow(
                     flow_ns=message['flow']
                 )
+                
+                all_messages.append(message['message'])
+                
+
+
 
         response['response'] = '{}'.format(dialogflow_response.messages)
         response['parameters'] = '{}'.format(dialogflow_response.parameters)
@@ -88,15 +98,31 @@ def connector():
                 'context': context,
                 'input_text': input_text
             }
-        response['results'] = results
-
+        response['results']  = results
+        response['response_messages'] = all_messages
         
-        print("Response:")
+        payload = {
+            "subscriber_id": response['request']['psid'],
+            "data" : {
+                "version": "v2",
+                "content": {
+                        "messages": [
+                            {
+                                "type": "text",
+                                "text": response['response_messages']
+                            }
+                        ]
+                }
+            },
+            "response_object" : response
+        }
+        
+        print("Payload:")
         print("-"*80)
         print("-"*80)
-        print("{}".format(response)) 
+        print("{}".format(payload)) 
 
-        return response
+        return payload
 
     else:
         return 'I am alive and right here  --- v2 !'
