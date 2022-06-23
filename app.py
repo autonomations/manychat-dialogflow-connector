@@ -3,10 +3,6 @@ from flask import Flask, request
 from utils import manychat_helpers, dialogflow_helpers
 import json
 
-# import logging 2
-# logging.basicConfig(filename="log.txt", level=logging.DEBUG)
-
-
 app = Flask(__name__)
 
 
@@ -90,13 +86,28 @@ def connector():
             }
         response['results'] = results
 
+        payload = {
+            'subscriber_id': psid,
+            'data': {
+                'version': 'v2',
+                'content': {
+                    'messages': [
+                        {
+                            'type': 'text',
+                            'text': message,
+                        } for message in dialogflow_response.messages
+                    ]
+                }
+            },
+            'response' : response
+        }
         
         print("Response:")
         print("-"*80)
         print("-"*80)
-        print("{}".format(response)) 
+        print("{}".format(payload)) 
 
-        return response
+        return payload
 
     else:
         return 'I am alive and right here  --- v2 !'

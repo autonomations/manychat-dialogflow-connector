@@ -19,7 +19,7 @@ class ManyChatAPI:
             'Authorization': f'Bearer {self.api_key}',
         }
 
-    def get_user_info(self) -> dict:
+    def get_user_info(self):
         params = {
             'subscriber_id': self.psid,
         }
@@ -41,7 +41,7 @@ class ManyChatAPI:
 
         return results
 
-    def send_content(self, messages: list) -> dict:
+    def send_content(self, messages: list):
         params = {
             'subscriber_id': self.psid,
             'data': {
@@ -74,7 +74,7 @@ class ManyChatAPI:
 
         return results
 
-    def send_flow(self, flow_ns: str) -> dict:
+    def send_flow(self, flow_ns: str):
         params = {
             'subscriber_id': self.psid,
             'flow_ns': flow_ns,
@@ -99,7 +99,7 @@ class ManyChatAPI:
 
     def set_custom_field_by_name(self,
                                  field_name: str,
-                                 field_value: Union[str, int, bool]) -> dict:
+                                 field_value: Union[str, int, bool]):
         params = {
             'subscriber_id': self.psid,
             'field_name': field_name,
