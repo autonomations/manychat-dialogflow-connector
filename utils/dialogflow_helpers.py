@@ -109,4 +109,4 @@ class DialogFlowAPI:   # Dialogflow API
                         }
                     )
         
-        return response, results
+        return response
