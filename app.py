@@ -3,7 +3,7 @@ from flask import Flask, request
 from utils import manychat_helpers, dialogflow_helpers
 import json
 
-# import logging
+# import logging 2
 # logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 
 
