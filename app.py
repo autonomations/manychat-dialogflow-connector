@@ -37,8 +37,6 @@ def connector():
             psid=psid,
         )
 
-
-
         if df_text_input == '':
             mc_user_info = mc.get_user_info()
             if mc_user_info['status'] == 'success':
@@ -105,7 +103,7 @@ def connector():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8080)
 
 
 
