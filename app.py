@@ -50,7 +50,7 @@ def connector():
             response['status'] = 'error'
             return response
 
-        dialogflow_response = df.detect_intent(
+        dialogflow_response, results = df.detect_intent(
             session_id=psid,
             text=input_text,
             language_code=language,
@@ -90,6 +90,7 @@ def connector():
                 'context': context,
                 'input_text': input_text
             }
+        response['results'] = results
 
         
         print("Response:")
@@ -104,7 +105,7 @@ def connector():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=5000)
 
 
 

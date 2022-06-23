@@ -7,59 +7,28 @@ import requests
 
 @dataclass
 class ManyChatAPI:
-    api_base_url = 'https://api.manychat.com/fb/'     # Initialize API - base_url, key, id, headers
+    api_base_url = 'https://api.manychat.com/fb/'
     api_key: str
     psid: str
     headers: dict = field(init=False)
 
-    def __post_init__(self):                         # Headers that authenticate Manychat App for trust
+    def __post_init__(self):
         self.headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': f'Bearer {self.api_key}',
         }
 
-    def get_user_info(self) -> dict:                 
-        params = {'subscriber_id': self.psid}        #  # Set the ID number --Get the user information
-        
-        try:
-            response = requests.get(                 # Get info of user request
-                url=f'{self.api_base_url}subscriber/getInfo',
-                headers=self.headers,
-                params=params,
-                timeout=5,
-            )
-        except Exception as e:                
-            results = {                             # If it fails... throw an error
-                'status': 'error',
-                'message': e,
-            }
-        else:       
-            results = json.loads(response.text)   # If everything goes well, return user info
-
-        return results
-    
-    def send_content(self, messages: list) -> dict:
-        params = {                                # Method to send a message back to Manychat
+    def get_user_info(self) -> dict:
+        params = {
             'subscriber_id': self.psid,
-            'data': {
-                'version': 'v2',                  # Compatible with Manychat
-                'content': {
-                    'messages': [
-                        {
-                            'type': 'text',
-                            'text': message,
-                        } for message in messages    # Shorthand for handling all messages
-                    ]
-                }
-            },
         }
 
         try:
-            response = requests.post(
-                url=f'{self.api_base_url}sending/sendContent',
+            response = requests.get(
+                url=f'{self.api_base_url}subscriber/getInfo',
                 headers=self.headers,
-                data=params,
+                params=params,
                 timeout=5,
             )
         except Exception as e:
@@ -70,7 +39,40 @@ class ManyChatAPI:
         else:
             results = json.loads(response.text)
 
-        return results, params
+        return results
+
+    def send_content(self, messages: list) -> dict:
+        params = {
+            'subscriber_id': self.psid,
+            'data': {
+                'version': 'v2',
+                'content': {
+                    'messages': [
+                        {
+                            'type': 'text',
+                            'text': message,
+                        } for message in messages
+                    ]
+                }
+            },
+        }
+
+        try:
+            response = requests.post(
+                url=f'{self.api_base_url}sending/sendContent',
+                headers=self.headers,
+                data=json.dumps(params),
+                timeout=5,
+            )
+        except Exception as e:
+            results = {
+                'status': 'error',
+                'message': e,
+            }
+        else:
+            results = json.loads(response.text)
+
+        return results
 
     def send_flow(self, flow_ns: str) -> dict:
         params = {
@@ -82,7 +84,7 @@ class ManyChatAPI:
             response = requests.post(
                 url=f'{self.api_base_url}sending/sendFlow',
                 headers=self.headers,
-                json=params,
+                data=json.dumps(params),
                 timeout=5,
             )
         except Exception as e:
@@ -93,7 +95,7 @@ class ManyChatAPI:
         else:
             results = json.loads(response.text)
 
-        return results, params
+        return results
 
     def set_custom_field_by_name(self,
                                  field_name: str,
