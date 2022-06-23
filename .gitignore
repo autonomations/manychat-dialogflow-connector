@@ -1,3 +1,5 @@
 __pycache__/
 *.py[cod]
 .idea
+manychat_payloads.ipynb.
+manychat_json_app.json

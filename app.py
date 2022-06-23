@@ -101,7 +101,7 @@ def connector():
         return response
 
     else:
-        return 'I am alive!'
+        return 'I am alive and right here  --- v2 !'
 
 
 if __name__ == '__main__':
