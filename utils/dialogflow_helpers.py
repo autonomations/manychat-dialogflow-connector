@@ -48,7 +48,8 @@ class DialogFlowAPI:   # Dialogflow API
 
         clean_response = df_response.text.replace(")]}'", "")   # Replace all )]}' for nothing
         results = json.loads(clean_response)
-        # print(json.dumps(results, indent=4, sort_keys=True))
+        
+        print(json.dumps(results, indent=4, sort_keys=True))
 
 
         if 'knowledgeAnswers' in results['queryResult']:
@@ -60,9 +61,8 @@ class DialogFlowAPI:   # Dialogflow API
                     }
                 )
 
-        
         if 'fulfillmentMessages' in results['queryResult']:
-            for message in results['queryResult']['fulfillmentMessages']:  # Now that we already have our message
+            for message in results['queryResult']['fulfillmentMessages']:
                 if 'text' in message:
                     if message['text']['text'][0].startswith('flow:'):
                         response.messages.append(
@@ -80,22 +80,22 @@ class DialogFlowAPI:   # Dialogflow API
                             }
                         )
 
-            
-                elif 'payload' in message: 
-                    if 'flow' in message['payload']:    
-                        response.messages.append(           # keep the payload style for previous compatibility
+                # keep the payload style for previous compatibility
+                elif 'payload' in message:
+                    if 'flow' in message['payload']:
+                        response.messages.append(
                             {
                                 'type': 'flow',
                                 'flow': message['payload']['flow']
                             }
                         )
 
-        if 'parameters' in results['queryResult']:          # copy the parameters 
+        if 'parameters' in results['queryResult']:
             for key, value in results['queryResult']['parameters'].items():
                 if key == 'date-period':
                     response.parameters += [
                         {
-                            'startDate': value[0]['startDate']  
+                            'startDate': value[0]['startDate']
                         },
                         {
                             'endDate': value[0]['endDate']
@@ -108,8 +108,5 @@ class DialogFlowAPI:   # Dialogflow API
                             key: value
                         }
                     )
-
-        results['messages']   = response.messages  
-        results['parameters'] = response.parameters
         
-        return results
+        return response

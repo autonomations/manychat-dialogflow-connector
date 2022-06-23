@@ -20,10 +20,8 @@ class ManyChatAPI:
         }
 
     def get_user_info(self) -> dict:                 
-        params = {                                  # Get the user information
-            'subscriber_id': self.psid,             # Set the ID number
-        }
-
+        params = {'subscriber_id': self.psid}        #  # Set the ID number --Get the user information
+        
         try:
             response = requests.get(                 # Get info of user request
                 url=f'{self.api_base_url}subscriber/getInfo',
@@ -40,7 +38,7 @@ class ManyChatAPI:
             results = json.loads(response.text)   # If everything goes well, return user info
 
         return results
-
+    
     def send_content(self, messages: list) -> dict:
         params = {                                # Method to send a message back to Manychat
             'subscriber_id': self.psid,
@@ -61,7 +59,7 @@ class ManyChatAPI:
             response = requests.post(
                 url=f'{self.api_base_url}sending/sendContent',
                 headers=self.headers,
-                data=json.dumps(params),
+                data=params,
                 timeout=5,
             )
         except Exception as e:
@@ -72,7 +70,7 @@ class ManyChatAPI:
         else:
             results = json.loads(response.text)
 
-        return results
+        return results, params
 
     def send_flow(self, flow_ns: str) -> dict:
         params = {
@@ -84,7 +82,7 @@ class ManyChatAPI:
             response = requests.post(
                 url=f'{self.api_base_url}sending/sendFlow',
                 headers=self.headers,
-                data=json.dumps(params),
+                json=params,
                 timeout=5,
             )
         except Exception as e:
@@ -95,7 +93,7 @@ class ManyChatAPI:
         else:
             results = json.loads(response.text)
 
-        return results
+        return results, params
 
     def set_custom_field_by_name(self,
                                  field_name: str,
