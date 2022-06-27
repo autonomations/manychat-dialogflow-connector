@@ -5,10 +5,6 @@ import json
 
 app = Flask(__name__)
 
-
-https://app.alpaca.markets/oauth/authorize?response_type=code&client_id=ba1aa93a99e8ae606452f8b512274b10&redirect_uri=https%3A%2F%2Fapi.stockbud.io%2Foauth%2Fcallback&scope=account%3Awrite%2Btrading%2Bdata&state=d2e2dQMJRhcRN9LUSOO6B9j0IeyuPS&mcp_token=eyJwaWQiOjEwNzAyOTEwMDk2MzQzMiwic2lkIjo1MjIwODI2MTkxMjYxNjUyLCJheCI6IjA4OWRkMDVhZjdkNjRjYTlhMjVmYjZhZDFiZDU3MmM2IiwidHMiOjE2NTYzMTkwNTIsImV4cCI6MTY1ODczODI1Mn0.9jzCcDocnydvnLu4tGm6H2h8HeUW2bz6YNX_EnxTipQ
-https://app.alpaca.markets/oauth/authorize?response_type=code&client_id=ba1aa93a99e8ae606452f8b512274b10&redirect_uri=https%3A%2F%2Fapi.stockbud.io%2Foauth%2Fcallback&scope=account%3Awrite%20trading%20data&state=d2e2dQMJRhcRN9LUSOO6B9j0IeyuPS
-
 @app.route('/', methods=['GET', 'POST'])
 def connector():
     if request.method == 'POST':
