@@ -61,6 +61,18 @@ class DialogFlowAPI:   # Dialogflow API
                     }
                 )
 
+        if 'outputContexts' in results['queryResult']:
+            for message in results['queryResults']['outputContexts']:
+                if 'name' in message:
+                    if message['name'].contains('context'):
+                        response.messages.append(
+                            {
+                                'type': 'text',
+                                'message': 'context: ' + results['queryResult']['outputContexts']['name'].split('/')[-1],
+                            }
+                        )
+
+
         if 'fulfillmentMessages' in results['queryResult']:
             for message in results['queryResult']['fulfillmentMessages']:
                 if 'text' in message:

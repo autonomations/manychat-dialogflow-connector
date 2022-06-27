@@ -1,0 +1,91 @@
+{
+    "id": "f040071e-1eb2-4e95-80e4-b1f1cfcb47c9",
+    "name": "buy_flight",
+    "auto": true,
+    "condition": "",
+    "conditionalFollowupEvents": [],
+    "conditionalResponses": [],
+    "context": [
+      "buy_flight"
+    ],
+    "contexts": [
+      "buy_flight"
+    ],
+    "endInteraction": false,
+    "events": [],
+    "fallbackIntent": false,
+    "liveAgentHandoff": false,
+    "parentId": null,
+    "followUpIntents": [],
+    "priority": 500000,
+    "responses": [
+      {
+        "action": "",
+        "affectedContexts": [
+          {
+            "name": "buy_flight",
+            "lifespan": 5
+          }
+        ],
+        "parameters": [],
+        "defaultResponsePlatforms": {},
+        "messages": [
+          {
+            "type": "message",
+            "condition": "",
+            "speech": []
+          },
+          {
+            "type": "custom_payload",
+            "condition": "",
+            "payload": {
+              "flow": "content20220619032821_641185"
+            }
+          }
+        ],
+        "resetContexts": false
+      }
+    ],
+    "rootParentId": null,
+    "templates": [],
+    "userSays": [
+      {
+        "isTemplate": false,
+        "data": [
+          {
+            "text": "flight please",
+            "userDefined": false
+          }
+        ],
+        "count": 0,
+        "id": "bb74e524-44a0-4406-89d4-5dfdbfde5d00",
+        "updated": null
+      },
+      {
+        "isTemplate": false,
+        "data": [
+          {
+            "text": "buy a flight",
+            "userDefined": false
+          }
+        ],
+        "count": 0,
+        "id": "31ee0d7f-c846-4b4e-92a6-dfa26c361efa",
+        "updated": null
+      },
+      {
+        "isTemplate": false,
+        "data": [
+          {
+            "text": "I'd like to buy a flight",
+            "userDefined": false
+          }
+        ],
+        "count": 0,
+        "id": "d43ba632-703e-46f3-bc80-4207b388f26f",
+        "updated": null
+      }
+    ],
+    "webhookForSlotFilling": false,
+    "webhookUsed": true
+  }
